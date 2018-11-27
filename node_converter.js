@@ -6,18 +6,22 @@
 
 
 // !!for now lets just pretend that no nodes have text content (innerHTML)
-export const DOMtoVirtual = ($node) => {
-  const vnode = {};
+const DOMtoVirtual = ($node) => {
+  const vnode = {name: "", attributes: {}, children: []};
 
   vnode.name = $node.nodeName;
   Object.values($node.attributes).forEach((attr) =>
     vnode.attributes[attr.name] = attr.nodeValue);
-  vnode.children = $node.children.map((child) => DOMtoVirtual(child));
+  if ($node.children.length === 0) {
+    vnode.attributes["innerText"] = $node.innerText;
+  };
+  vnode.children = Array.from($node.children).map((child) => DOMtoVirtual(child));
+
 
   return vnode;
 };
 
-export const VirtualtoDOM = (vnode) => {
+const VirtualtoDOM = (vnode) => {
   const $node = document.createElement(vnode.name);
 
   for (let attr in vnode.attributes) {
@@ -27,4 +31,6 @@ export const VirtualtoDOM = (vnode) => {
   vnode.children.forEach((child) => {
     $node.appendChild(VirtualtoDOM(child));
   });
+
+  return $node
 };
