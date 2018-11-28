@@ -5,7 +5,9 @@
 // recursively
 
 
-// !!for now lets just pretend that no nodes have text content (innerHTML)
+// I am making the assumption here that only terminal DOM nodes have inner text
+// A fairly safe, but not foolproof assumption
+
 const DOMtoVirtual = ($node) => {
   const vnode = {name: "", attributes: {}, children: []};
 
@@ -26,6 +28,11 @@ const VirtualtoDOM = (vnode) => {
 
   for (let attr in vnode.attributes) {
     $node.setAttribute(attr, vnode.attributes[attr]);
+  };
+
+  if (vnode.attributes.innerText) {
+    $node.removeAttribute("innerText");
+    $node.innerHTML = vnode.attributes.innerText;
   };
 
   vnode.children.forEach((child) => {
