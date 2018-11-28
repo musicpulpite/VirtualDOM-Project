@@ -12,12 +12,12 @@ In *node_converter* there are two methods - one for converting a DOMNode element
 So for example:
 ```html
 <main class="root">
-  <h1 innertext="Test document"></h1>
+  <h1>Test document</h1>
   <ul id="test-ul">
-    <li id="1" class="bold-or-something" innertext="hi"></li>
-    <li id="2" innertext="there"></li>
-    <li id="3" innertext="v"></li>
-    <li id="4" innertext="dom"></li>
+    <li id="1" class="bold-or-something">hi</li>
+    <li id="2">there</li>
+    <li id="3">v</li>
+    <li id="4">dom</li>
   </ul>
 </main>
 ```
