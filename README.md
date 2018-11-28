@@ -1,8 +1,7 @@
 # VirtualDOM Independent Project  
 In this project I replicated the basic functionality of the React.js virtual DOM and virtual DOM diffing algorithm using vanilla Javascript (including the default DOM API).  
 
-I took inspiration from the following sources but this exact implementation  
-is entirely my own:  
+I took inspiration from the following sources but this exact implementation is entirely my own:  
 1. [Create your own virtual DOM to understand it(part 1)](https://aibolik.github.io/blog/create-your-own-virtual-dom-to-understand-it-part-1)  
 2. [How to write your own virtual DOM](https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060)  
 
