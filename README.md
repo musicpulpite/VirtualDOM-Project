@@ -9,6 +9,37 @@ is entirely my own:
 ## Functionality  
 In *node_converter* there are two methods - one for converting a DOMNode element into a POJO (plain-old-javascript object) representing the structure of the original DOM and the other for doing the inverse (virtual DOM object to DOM Node).  
 
+So for example:
+```html
+<main class="root">
+  <h1 innertext="Test document"></h1>
+  <ul id="test-ul">
+    <li id="1" class="bold-or-something" innertext="hi"></li>
+    <li id="2" innertext="there"></li>
+    <li id="3" innertext="v"></li>
+    <li id="4" innertext="dom"></li>
+  </ul>
+</main>
+```
+
+is interconverted with:
+
+```javascript
+{"name":"MAIN",
+  "attributes":{"class":"root"},
+  "children":
+    [{"name":"H1",
+      "attributes":{"innerText":"Test document"},
+      "children":[]},
+     {"name":"UL",
+      "attributes":{"id":"test-ul"},
+      "children":
+        [{"name":"LI","attributes":{"id":"1","class":"bold-or-something","innerText":"hi"},"children":[]},     
+         {"name":"LI","attributes":{"id":"2","innerText":"there"},"children":[]},
+         {"name":"LI","attributes":{"id":"3","innerText":"v"},"children":[]},
+         {"name":"LI","attributes":{"id":"4","innerText":"dom"},"children":[]}]}]}
+```
+
 It should be noted that the structure of the virtual DOM is perfectly analogous to the original DOM. However, this lightweight representation allows us to more efficiently perform operations on the structure and query node attributes.  
 
 The second file - *vdom_differ* - contains the method for comparing two virtual DOM objects (an old and new object, or in the case of React the virtual DOM before and after a re-rendering) and returns a list of the nodes in the old virtual DOM marked as _dirty_ and thus in need of re-rendering in the actual DOM.  
