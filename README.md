@@ -37,7 +37,9 @@ is interconverted with:
         [{"name":"LI","attributes":{"id":"1","class":"bold-or-something","innerText":"hi"},"children":[]},     
          {"name":"LI","attributes":{"id":"2","innerText":"there"},"children":[]},
          {"name":"LI","attributes":{"id":"3","innerText":"v"},"children":[]},
-         {"name":"LI","attributes":{"id":"4","innerText":"dom"},"children":[]}]}]}
+         {"name":"LI","attributes":{"id":"4","innerText":"dom"},"children":[]}]
+      }]
+  }
 ```
 
 It should be noted that the structure of the virtual DOM is perfectly analogous to the original DOM. However, this lightweight representation allows us to more efficiently perform operations on the structure and query node attributes.  
