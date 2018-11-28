@@ -58,7 +58,7 @@ const nodeDiffer = (nodeOld, nodeNew) => {
   if (nodeOld.attributes.innerText &&
     nodeOld.attributes.innerText !== nodeNew.attributes.innerText) {
       dirty = true;
-    }
+  }
 
   if (dirty) {
     dirtyNodeList.push(nodeOld);
