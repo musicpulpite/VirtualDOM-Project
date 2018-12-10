@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript" src="node_converter.js"></script>
+    <script type="text/javascript" src="vdom_differ.js"></script>
+    <script type="text/javascript">
+
+      document.addEventListener('DOMContentLoaded', (e) => {
+         window.root = document.getElementsByClassName("root");
+         window.old = DOMtoVirtual(window.root[0]);
+         window.new_content = DOMtoVirtual(window.root[1]);
+         window.new_insertion = DOMtoVirtual(window.root[2]);
+         window.new_deletion = DOMtoVirtual(window.root[3]);
+         window.new_mixed = DOMtoVirtual(window.root[4]);
+      });
+    </script>
+  </head>
+  <body>
+
+    <main class="root" id="old">
+      <h1>Test document</h1>
+      <ul id="test-ul">
+        <li id="1" class="bold-or-something">hi</li>
+        <li id="2">there</li>
+        <li id="3">v</li>
+        <li id="4">dom</li>
+      </ul>
+    </main>
+
+    <main class="root" id="new_content">
+      <h1>Test document</h1>
+      <ul id="test-ul">
+        <li id="1" class="bold-or-something">hi</li>
+        <li id="2">there</li>
+
+        <li id="whaa">v</li>
+        <li id="4">whaa</li>
+      </ul>
+    </main>
+    <main class="root" id="new_insertion">
+      <h1>Test document</h1>
+      <ul id="test-ul">
+        <li id="1" class="bold-or-something">hi</li>
+        <li id="2">there</li>
+        <li id="3">v</li>
+        <li id="4">dom</li>
+        <li id="5">new</li>
+      </ul>
+    </main>
+    <main class="root" id="new_deletion">
+      <h1>Test document</h1>
+      <ul id="test-ul">
+        <li id="1" class="bold-or-something">hi</li>
+
+        <li id="3">v</li>
+        <li id="4">dom</li>
+      </ul>
+    </main>
+    <main class="root" id="new_mixed">
+      <h1>Nothing</h1>
+      <ul id="test-ul">
+        <li id="1" class="bold-or-something">hi</li>
+
+        <li id="3">v</li>
+        <li id="4">dom</li>
+      </ul>
+    </main>
+
+
+  </body>
+</html>

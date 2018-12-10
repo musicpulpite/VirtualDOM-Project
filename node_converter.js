@@ -30,7 +30,6 @@ const VirtualtoDOM = (vnode) => {
   const $node = document.createElement(vnode.name);
 
   for (let attr in vnode.attributes) {
-    debugger
     $node.setAttribute(attr, vnode.attributes[attr]);
   };
 
