@@ -61,7 +61,7 @@ const nodeDiffer = (nodeOld, nodeNew) => {
   }
 
   if (dirty) {
-    dirtyNodeList.push(nodeOld);
+    dirtyNodeList.push([nodeOld, nodeNew]);
   } else {
     nodeOld.children.forEach(child => nodeQueueOld.push(child));
     nodeNew.children.forEach(child => nodeQueueNew.push(child));
