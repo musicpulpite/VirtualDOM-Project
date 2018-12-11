@@ -24,7 +24,7 @@ So for example:
 is interconverted with:
 
 ```javascript
-"{
+{
   "type": "MAIN",
   "props": {
     "children": [
@@ -100,7 +100,7 @@ is interconverted with:
   "key": 1,
   "ref": null,
   "$$typeof": null
-}"
+}
 ```
 
 It should be noted that the structure of the virtual DOM is perfectly analogous to the original DOM. However, this lightweight representation allows us to more efficiently perform operations on the structure and query node attributes.  
