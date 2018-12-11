@@ -24,21 +24,83 @@ So for example:
 is interconverted with:
 
 ```javascript
-{"name":"MAIN",
-  "attributes":{"class":"root"},
-  "children":
-    [{"name":"H1",
-      "attributes":{"innerText":"Test document"},
-      "children":[]},
-     {"name":"UL",
-      "attributes":{"id":"test-ul"},
-      "children":
-        [{"name":"LI","attributes":{"id":"1","class":"bold-or-something","innerText":"hi"},"children":[]},     
-         {"name":"LI","attributes":{"id":"2","innerText":"there"},"children":[]},
-         {"name":"LI","attributes":{"id":"3","innerText":"v"},"children":[]},
-         {"name":"LI","attributes":{"id":"4","innerText":"dom"},"children":[]}]
-      }]
-  }
+"{
+  "type": "MAIN",
+  "props": {
+    "children": [
+      {
+        "type": "H1",
+        "props": {
+          "children": [],
+          "innerText": "Test document"
+        },
+        "key": 0,
+        "ref": null,
+        "$$typeof": null
+      },
+      {
+        "type": "UL",
+        "props": {
+          "children": [
+            {
+              "type": "LI",
+              "props": {
+                "children": [],
+                "id": "1",
+                "class": "bold-or-something",
+                "innerText": "hi"
+              },
+              "key": 0,
+              "ref": null,
+              "$$typeof": null
+            },
+            {
+              "type": "LI",
+              "props": {
+                "children": [],
+                "id": "2",
+                "innerText": "there"
+              },
+              "key": 1,
+              "ref": null,
+              "$$typeof": null
+            },
+            {
+              "type": "LI",
+              "props": {
+                "children": [],
+                "id": "3",
+                "innerText": "v"
+              },
+              "key": 2,
+              "ref": null,
+              "$$typeof": null
+            },
+            {
+              "type": "LI",
+              "props": {
+                "children": [],
+                "id": "4",
+                "innerText": "dom"
+              },
+              "key": 3,
+              "ref": null,
+              "$$typeof": null
+            }
+          ],
+          "id": "test-ul"
+        },
+        "key": 1,
+        "ref": null,
+        "$$typeof": null
+      }
+    ],
+    "class": "root"
+  },
+  "key": 1,
+  "ref": null,
+  "$$typeof": null
+}"
 ```
 
 It should be noted that the structure of the virtual DOM is perfectly analogous to the original DOM. However, this lightweight representation allows us to more efficiently perform operations on the structure and query node attributes.  
@@ -69,22 +131,30 @@ for (let attr in nodeNew.attributes) {
   };
 };
 ```
-It also checks that each child of the old node and new node match up  
+It also checks that each child of the old node and new node match up based on their keys  
 (but not necessarily that their attributes or contents match).
 ```javascript
-// Node children
-nodeOld.children.forEach((child, idx) => {
-  if (nodeNew.children[idx] === undefined ||
-    child.name !== nodeNew.children[idx].name) {
-      dirty = true;
-    }
+// Compare keys of all child nodes (deletions or insertions)
+nodeOld.props.children.forEach((childOld) => {
+  let newMatch = nodeNew.props.children.find(
+    (childNew) => childOld.key === childNew.key
+  );
+
+  if (newMatch === undefined) {
+    dirtyNodeList.push([childOld, null]);
+    unmatchedChildren = true;
+  };
 });
 
-nodeNew.children.forEach((child, idx) => {
-  if (nodeOld.children[idx] === undefined ||
-    child.name !== nodeOld.children[idx].name) {
-      dirty = true;
-    }
+nodeNew.props.children.forEach((childNew) => {
+  let oldMatch = nodeOld.props.children.find(
+    (childOld) => childNew.key === childOld.key
+  );
+
+  if (oldMatch === undefined) {
+    dirtyNodeList.push([null, childNew]);
+    unmatchedChildren = true;
+  };
 });
 ```
 In this bare-bones implementation, only terminal nodes are checked for innerText.  
