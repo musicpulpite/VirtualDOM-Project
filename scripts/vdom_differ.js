@@ -20,6 +20,7 @@ const vDOMdiffer = (vDOMold, vDOMnew) => {
 
 const nodeDiffer = (nodeOld, nodeNew) => {
   let dirty = false;
+  let unmatchedChildren = false;
 
   // Node Name
   if (nodeOld.type !== nodeNew.type) {
@@ -48,9 +49,8 @@ const nodeDiffer = (nodeOld, nodeNew) => {
     );
 
     if (newMatch === undefined) {
-      debugger
       dirtyNodeList.push([childOld, null]);
-      return;
+      unmatchedChildren = true;
     };
   });
 
@@ -61,7 +61,7 @@ const nodeDiffer = (nodeOld, nodeNew) => {
 
     if (oldMatch === undefined) {
       dirtyNodeList.push([null, childNew]);
-      return;
+      unmatchedChildren = true;
     };
   });
 
@@ -73,7 +73,7 @@ const nodeDiffer = (nodeOld, nodeNew) => {
 
   if (dirty) {
     dirtyNodeList.push([nodeOld, nodeNew]);
-  } else {
+  } else if (unmatchedChildren === false) {
     nodeOld.props.children.forEach(child => nodeQueueOld.push(child));
     nodeNew.props.children.forEach(child => nodeQueueNew.push(child));
   }

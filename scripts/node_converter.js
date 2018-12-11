@@ -14,7 +14,7 @@
 // valid HTML attributes that will necessarily be passed to their respective
 // DOMNodes.
 
-const DOMtoVirtual = ($node, key) => {
+const DOMtoVirtual = ($node, key = 1) => {
   const vnode =
     {type: "",
     props: {children: []},
@@ -42,9 +42,9 @@ const DOMtoVirtual = ($node, key) => {
 const VirtualtoDOM = (vnode) => {
   const $node = document.createElement(vnode.type);
 
-  for (let attr in vnode.props) {
-    if (attr === "children") continue;
-    $node.setAttribute(attr, vnode.props[attr]);
+  for (let prop in vnode.props) {
+    if (prop === "children") continue;
+    $node.setAttribute(prop, vnode.props[prop]);
   };
 
   if (vnode.props.innerText) {
@@ -70,8 +70,13 @@ const render = (vnode, $parentNode) => {
 // Lastly, let's go ahead and provide the ability to directly create virtual
 // elements. This is our rendition of the React.createElement method
 
-const createElement = (name, attributes, ...children) => {
-  const vnode = {name: name, attributes: attributes, children: children};
+const createElement = (type, props, ...children) => {
+  const vnode = {
+    type: type,
+    props: {...props, children: children},
+    key: null,
+    ref: null,
+    $$typeof: null};
 
   return vnode;
 };
