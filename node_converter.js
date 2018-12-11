@@ -1,5 +1,7 @@
-// DOM node has three properties: name, attributes(hash), children(array)
-// DOM node can either be element node(nodeType = 1) or text node(nodeType = 3)
+// A DOM node has three properties: name, attributes(hash), children(array)
+// A virtual DOM node has: type, attributes(including children), ref, key, $$typeof
+// For now we will not be dealing with custom react components, just representations
+// of valid HTML elements.
 
 // Use the DOM API to access node attributes and traverse the node tree
 // recursively, converting DOMNodes into virtual elements at every step.
@@ -9,36 +11,48 @@
 // A fairly safe, but not foolproof assumption
 
 // I am also making the assumption that all props set on virtual elements are
-// valid HTML attributes that will necessarily be passed to the DOMNode.
+// valid HTML attributes that will necessarily be passed to their respective
+// DOMNodes.
 
-const DOMtoVirtual = ($node) => {
-  const vnode = {name: "", attributes: {}, children: []};
+const DOMtoVirtual = ($node, key) => {
+  const vnode =
+    {type: "",
+    props: {children: []},
+    key: null,
+    ref: null,
+    $$typeof: null};
 
-  vnode.name = $node.nodeName;
+  vnode.type = $node.nodeName;
+
   Object.values($node.attributes).forEach((attr) =>
-    vnode.attributes[attr.name] = attr.nodeValue);
-  if ($node.children.length === 0) {
-    vnode.attributes["innerText"] = $node.innerText;
-  };
-  vnode.children = Array.from($node.children).map((child) => DOMtoVirtual(child));
+    vnode.props[attr.name] = attr.nodeValue);
 
+  if ($node.children.length === 0) {
+    vnode.props["innerText"] = $node.innerText;
+  };
+
+  vnode.key = key;
+
+  vnode.props.children = Array.from($node.children).map((child, key) =>
+    DOMtoVirtual(child, key));
 
   return vnode;
 };
 
 const VirtualtoDOM = (vnode) => {
-  const $node = document.createElement(vnode.name);
+  const $node = document.createElement(vnode.type);
 
-  for (let attr in vnode.attributes) {
-    $node.setAttribute(attr, vnode.attributes[attr]);
+  for (let attr in vnode.props) {
+    if (attr === "children") continue;
+    $node.setAttribute(attr, vnode.props[attr]);
   };
 
-  if (vnode.attributes.innerText) {
+  if (vnode.props.innerText) {
     $node.removeAttribute("innerText");
-    $node.innerHTML = vnode.attributes.innerText;
+    $node.innerHTML = vnode.props.innerText;
   };
 
-  vnode.children.forEach((child) => {
+  vnode.props.children.forEach((child) => {
     $node.appendChild(VirtualtoDOM(child));
   });
 

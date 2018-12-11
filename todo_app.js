@@ -14,12 +14,8 @@ const newTodo = (e) => {
       createElement('ul', {}, createElement('h4', {innerText: "SubTodo List"}))
     );
 
-    // vDOMnew = deepCopy(vDOMold);
     vDOMnew.children.push(todo);
-
-    // let dirtyNodes = diffvDOMs(vDOMold, vDOMnew);
-    // updateDOM(dirtyNodes);
-    updateDOM
+    updateDOM(vDOMold, vDOMnew);
 
     // remember to reset form
     e.target.reset();
@@ -31,19 +27,20 @@ const newSubTodo = (e) => {
   // remember to reset form
 };
 
-const diffvDOMs = (vDOMold, vDOMnew) => {
+const updateDOM = (vDOMold, vDOMnew) => {
+  // Fill in new virtual DOM
   vDOMnewbox.innerHTML = "<pre>" + JSON.stringify(vDOMnew, null, " ") + "</pre>"
-  dirtyNodes = vDOMdiffer(vDOMold, vDOMnew);
+  const dirtyNodes = vDOMdiffer(vDOMold, vDOMnew);
 
   // highlight differences
+  const markIndexOld = vDOMoldbox.innerHTML.indexOf(JSON.stringify(dirtyNodes[0][0]));
+  const markIndexNew = vDOMnewbox.innerHTML.indexOf(JSON.stringify(dirtyNodes[0][0]));
+  // updateDOM
 
-  return dirtyNodes;
-};
-
-const updateDOM = () => {
-  for (let idx in dirtyNodeList) {
-
-  }
+  // reset vDOMold and vDOMnew and DOM boxes
+  vDOMold = deepCopy(vDOMnew);
+  vDOMoldbox.innerHTML = "<pre>" + JSON.stringify(vDOMold, null, " ") + "</pre>"
+  vDOMnewbox.innerHTML = "<pre></pre>"
 };
 
 window.addEventListener('DOMContentLoaded', () => {

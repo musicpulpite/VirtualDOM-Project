@@ -22,49 +22,60 @@ const nodeDiffer = (nodeOld, nodeNew) => {
   let dirty = false;
 
   // Node Name
-  if (nodeOld.name !== nodeNew.name) {
+  if (nodeOld.type !== nodeNew.type) {
     dirty = true;
   }
 
   // Node attributes
-  for (let attr in nodeOld.attributes) {
-    if (nodeOld.attributes[attr] !== nodeNew.attributes[attr]) {
+  for (let prop in nodeOld.props) {
+    if (prop === "children") continue;
+    if (nodeOld.props[prop] !== nodeNew.props[prop]) {
       dirty = true;
     };
   };
 
-  for (let attr in nodeNew.attributes) {
-    if (nodeNew.attributes[attr] !== nodeOld.attributes[attr]) {
+  for (let prop in nodeNew.props) {
+    if (prop === "children") continue;
+    if (nodeNew.props[prop] !== nodeOld.props[prop]) {
       dirty = true;
     };
   };
 
-  // Node children
-  nodeOld.children.forEach((child, idx) => {
-    if (nodeNew.children[idx] === undefined ||
-      child.name !== nodeNew.children[idx].name) {
-        dirty = true;
-      }
+  // Compare keys of all child nodes (deletions or insertions)
+  nodeOld.props.children.forEach((childOld) => {
+    let newMatch = nodeNew.props.children.find(
+      (childNew) => childOld.key === childNew.key
+    );
+
+    if (newMatch === undefined) {
+      debugger
+      dirtyNodeList.push([childOld, null]);
+      return;
+    };
   });
 
-  nodeNew.children.forEach((child, idx) => {
-    if (nodeOld.children[idx] === undefined ||
-      child.name !== nodeOld.children[idx].name) {
-        dirty = true;
-      }
+  nodeNew.props.children.forEach((childNew) => {
+    let oldMatch = nodeOld.props.children.find(
+      (childOld) => childNew.key === childOld.key
+    );
+
+    if (oldMatch === undefined) {
+      dirtyNodeList.push([null, childNew]);
+      return;
+    };
   });
 
   // Node InnerText (if present)
-  if (nodeOld.attributes.innerText &&
-    nodeOld.attributes.innerText !== nodeNew.attributes.innerText) {
+  if (nodeOld.props.innerText &&
+    nodeOld.props.innerText !== nodeNew.props.innerText) {
       dirty = true;
   }
 
   if (dirty) {
     dirtyNodeList.push([nodeOld, nodeNew]);
   } else {
-    nodeOld.children.forEach(child => nodeQueueOld.push(child));
-    nodeNew.children.forEach(child => nodeQueueNew.push(child));
+    nodeOld.props.children.forEach(child => nodeQueueOld.push(child));
+    nodeNew.props.children.forEach(child => nodeQueueNew.push(child));
   }
 
   return
