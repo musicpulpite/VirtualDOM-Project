@@ -2,80 +2,108 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Virtual DOM Project</title>
+    <link rel="stylesheet" href="assets/application.css">
     <script type="text/javascript" src="scripts/node_converter.js"></script>
     <script type="text/javascript" src="scripts/vdom_differ.js"></script>
+    <script type="text/javascript" src="todos.js"></script>
     <script type="text/javascript">
 
       document.addEventListener('DOMContentLoaded', (e) => {
-         window.root = document.getElementsByClassName("root");
-         window.old = DOMtoVirtual(window.root[0]);
-         window.new_content = DOMtoVirtual(window.root[1]);
-         window.new_insertion = DOMtoVirtual(window.root[2]);
-         window.new_deletion = DOMtoVirtual(window.root[3]);
-         window.new_mixed = DOMtoVirtual(window.root[4]);
+         const root = document.getElementsByClassName("root");
+
+         window.old = DOMtoVirtual(root[0]);
+         window.modified_content = DOMtoVirtual(root[1]);
+         window.insertion = DOMtoVirtual(root[2]);
+         window.deletion = DOMtoVirtual(root[3]);
+         window.mixed = DOMtoVirtual(root[4]);
       });
     </script>
   </head>
   <body>
 
     <!-- old -->
-    <main class="root">
-      <h1>Test document</h1>
-      <ul id="test-ul">
-        <li id="1" class="bold-or-something">hi</li>
-        <li id="2">there</li>
-        <li id="3">v</li>
-        <li id="4">dom</li>
-      </ul>
-    </main>
+    <aside id="oldvDOM"></aside>
+
+    <button id="diff">Diff vDOM's</button>
+    <button id="reset">Reset</button>
+
+    <aside id="newvDOM"></aside>
+
+    <div id="old">
+      <h3 style="color:pink;">Original</h3>
+
+      <main class="root">
+        <h1>Todo List</h1>
+        <ul id="todo-ul">
+          <li id="1" class="highlighted">Buy Eggs</li>
+          <li id="2" class="italics">Buy Milk</li>
+          <li id="3">Buy Dog Food</li>
+          <li id="4">Wash Car</li>
+        </ul>
+      </main>
+    </div>
 
     <!-- new_content -->
-    <main class="root">
-      <h1>Test document</h1>
-      <ul id="test-ul">
-        <li id="1" class="bold-or-something">hi</li>
-        <li id="2">there</li>
+    <div id="modified_content">
+      <h3 style="color:blue;">Modified Content</h3>
 
-        <li id="whaa">v</li>
-        <li id="4">whaa</li>
-      </ul>
-    </main>
+      <main class="root">
+        <h1>Todo List</h1>
+        <ul id="todo-ul">
+          <li id="1" class="highlighted">Buy Eggs</li>
+          <li id="2" class="bold">Buy Milk</li>
+          <li id="3">Return Library Books</li>
+          <li id="4">Wash Car</li>
+        </ul>
+      </main>
+    </div>
 
     <!-- new_insertion -->
-    <main class="root">
-      <h1>Test document</h1>
-      <ul id="test-ul">
-        <li id="1" class="bold-or-something">hi</li>
-        <li id="2">there</li>
-        <li id="3">v</li>
-        <li id="4">dom</li>
-        <li id="5">new</li>
-      </ul>
-    </main>
+    <div id="insertion">
+      <h3 style="color:yellow;">Inserted Elements</h3>
+
+      <main class="root">
+        <h1>Todo List</h1>
+        <ul id="todo-ul">
+          <li id="1" class="highlighted">Buy Eggs</li>
+          <li id="2" class="italics">Buy Milk</li>
+          <li id="3">Buy Dog Food</li>
+          <li id="4">Wash Car</li>
+          <li id="5">Make Doctors Appointment</li>
+        </ul>
+      </main>
+    </div>
 
     <!-- new_deletion -->
-    <main class="root">
-      <h1>Test document</h1>
-      <ul id="test-ul">
-        <li id="1" class="bold-or-something">hi</li>
+    <div id="deletion">
+      <h3 style="color:purple;">Deleted Elements</h3>
 
-        <li id="3">v</li>
-        <li id="4">dom</li>
-      </ul>
-    </main>
+      <main class="root">
+        <h1>Todo List</h1>
+        <ul id="todo-ul">
+          <li id="1" class="highlighted">Buy Eggs</li>
+
+          <li id="3">Buy Dog Food</li>
+          <li id="4">Wash Car</li>
+        </ul>
+      </main>
+    </div>
 
     <!-- new_mixed -->
-    <main class="root">
-      <h1>Nothing</h1>
-      <ul id="test-ul">
-        <li id="1" class="bold-or-something">hi</li>
-        <li id="2">there</li>
-        <li id="3">v</li>
-        <li id="4">dom</li>
-        <li id="5">new</li>
-      </ul>
-    </main>
+    <div id="mixed">
+      <h3 style="color:brown;">Combination of Changes</h3>
+
+      <main class="root">
+        <h1>New Todo List</h1>
+        <ul id="todo-ul">
+          <li id="1" class="highlighted">Buy Eggs</li>
+
+          <li id="3">Buy Dog Food</li>
+          <li id="4">Wash Car</li>
+        </ul>
+      </main>
+    </div>
 
 
   </body>

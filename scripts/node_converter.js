@@ -36,6 +36,9 @@ const DOMtoVirtual = ($node, key = 1) => {
   vnode.props.children = Array.from($node.children).map((child, key) =>
     DOMtoVirtual(child, key));
 
+  // note this!
+  vnode.ref = $node;
+
   return vnode;
 };
 
