@@ -20,7 +20,6 @@ const vDOMdiffer = (vDOMold, vDOMnew) => {
 
 const nodeDiffer = (nodeOld, nodeNew) => {
   let dirty = false;
-  // let unmatchedChildren = false;
   let cleanChildrenOld = [];
   let cleanChildrenNew = [];
 
