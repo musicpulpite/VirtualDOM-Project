@@ -1,6 +1,9 @@
 # VirtualDOM Independent Project  
 In this project I replicated the basic functionality of the React.js virtual DOM and virtual DOM diffing algorithm using vanilla Javascript (including the default DOM API).  
 
+See demo of this project here:  
+[VirtualDOM-Project](https://musicpulpite.github.io/VirtualDOM-Project/)
+
 I took inspiration from the following sources but this exact implementation is entirely my own:  
 1. [Create your own virtual DOM to understand it(part 1)](https://aibolik.github.io/blog/create-your-own-virtual-dom-to-understand-it-part-1)  
 2. [How to write your own virtual DOM](https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060)  
@@ -135,27 +138,29 @@ It also checks that each child of the old node and new node match up based on th
 (but not necessarily that their attributes or contents match).
 ```javascript
 // Compare keys of all child nodes (deletions or insertions)
-nodeOld.props.children.forEach((childOld) => {
-  let newMatch = nodeNew.props.children.find(
-    (childNew) => childOld.key === childNew.key
-  );
+  nodeOld.props.children.forEach((childOld) => {
+    let childNew = nodeNew.props.children.find(
+      (childNew) => childOld.key === childNew.key
+    );
 
-  if (newMatch === undefined) {
-    dirtyNodeList.push([childOld, null]);
-    unmatchedChildren = true;
-  };
-});
+    if (childNew === undefined) {
+      dirtyNodeList.push([childOld, null]);
+    } else {
+      // Only need to do this once for each match
+      cleanChildrenOld.push(childOld);
+      cleanChildrenNew.push(childNew);
+    };
+  });
 
-nodeNew.props.children.forEach((childNew) => {
-  let oldMatch = nodeOld.props.children.find(
-    (childOld) => childNew.key === childOld.key
-  );
+  nodeNew.props.children.forEach((childNew) => {
+    let childOld = nodeOld.props.children.find(
+      (childOld) => childNew.key === childOld.key
+    );
 
-  if (oldMatch === undefined) {
-    dirtyNodeList.push([null, childNew]);
-    unmatchedChildren = true;
-  };
-});
+    if (childOld === undefined) {
+      dirtyNodeList.push([null, childNew]);
+    }
+  });
 ```
 In this bare-bones implementation, only terminal nodes are checked for innerText.  
 ```javascript
