@@ -20,7 +20,9 @@ const vDOMdiffer = (vDOMold, vDOMnew) => {
 
 const nodeDiffer = (nodeOld, nodeNew) => {
   let dirty = false;
-  let unmatchedChildren = false;
+  // let unmatchedChildren = false;
+  let cleanChildrenOld = [];
+  let cleanChildrenNew = [];
 
   // Node Name
   if (nodeOld.type !== nodeNew.type) {
@@ -44,25 +46,32 @@ const nodeDiffer = (nodeOld, nodeNew) => {
 
   // Compare keys of all child nodes (deletions or insertions)
   nodeOld.props.children.forEach((childOld) => {
-    let newMatch = nodeNew.props.children.find(
+    let childNew = nodeNew.props.children.find(
       (childNew) => childOld.key === childNew.key
     );
 
-    if (newMatch === undefined) {
+    if (childNew === undefined) {
       dirtyNodeList.push([childOld, null]);
-      unmatchedChildren = true;
+      // unmatchedChildren = true;
+    } else {
+      cleanChildrenOld.push(childOld);
+      cleanChildrenNew.push(childNew);
     };
   });
 
   nodeNew.props.children.forEach((childNew) => {
-    let oldMatch = nodeOld.props.children.find(
+    let childOld = nodeOld.props.children.find(
       (childOld) => childNew.key === childOld.key
     );
 
-    if (oldMatch === undefined) {
+    if (childOld === undefined) {
       dirtyNodeList.push([null, childNew]);
-      unmatchedChildren = true;
-    };
+      // unmatchedChildren = true;
+    }
+    // else {
+    //   cleanChildrenNew.push(childNew);
+    //   cleanChildrenOld.push(childOld);
+    // };
   });
 
   // Node InnerText (if present)
@@ -73,10 +82,14 @@ const nodeDiffer = (nodeOld, nodeNew) => {
 
   if (dirty) {
     dirtyNodeList.push([nodeOld, nodeNew]);
-  } else if (unmatchedChildren === false) {
-    nodeOld.props.children.forEach(child => nodeQueueOld.push(child));
-    nodeNew.props.children.forEach(child => nodeQueueNew.push(child));
+  } else {
+    cleanChildrenOld.forEach(child => nodeQueueOld.push(child));
+    cleanChildrenNew.forEach(child => nodeQueueNew.push(child));
   }
+  // else if (unmatchedChildren === false) {
+  //   nodeOld.props.children.forEach(child => nodeQueueOld.push(child));
+  //   nodeNew.props.children.forEach(child => nodeQueueNew.push(child));
+  // }
 
   return
 };

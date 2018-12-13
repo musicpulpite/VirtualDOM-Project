@@ -12,6 +12,18 @@ div:hover {
   cursor: pointer;
 }
 
+.serif {
+  font-family: sans-serif;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: 600;
+}
+
 .old {
   border: 2px solid red;
 }
