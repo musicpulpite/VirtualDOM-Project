@@ -31,7 +31,9 @@ const DOMtoVirtual = ($node, key = 1) => {
     vnode.props["innerText"] = $node.innerText;
   };
 
-  vnode.key = key;
+  // We need to assign unique keys for every vDOM Node
+  // Id's are inherently unique, but we will assign its index otherwise
+  vnode.key = $node.id || key;
 
   vnode.props.children = Array.from($node.children).map((child, key) =>
     DOMtoVirtual(child, key));

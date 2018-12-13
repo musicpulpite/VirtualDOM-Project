@@ -52,8 +52,8 @@ const nodeDiffer = (nodeOld, nodeNew) => {
 
     if (childNew === undefined) {
       dirtyNodeList.push([childOld, null]);
-      // unmatchedChildren = true;
     } else {
+      // Only need to do this once for each match
       cleanChildrenOld.push(childOld);
       cleanChildrenNew.push(childNew);
     };
@@ -66,12 +66,7 @@ const nodeDiffer = (nodeOld, nodeNew) => {
 
     if (childOld === undefined) {
       dirtyNodeList.push([null, childNew]);
-      // unmatchedChildren = true;
     }
-    // else {
-    //   cleanChildrenNew.push(childNew);
-    //   cleanChildrenOld.push(childOld);
-    // };
   });
 
   // Node InnerText (if present)
@@ -86,10 +81,6 @@ const nodeDiffer = (nodeOld, nodeNew) => {
     cleanChildrenOld.forEach(child => nodeQueueOld.push(child));
     cleanChildrenNew.forEach(child => nodeQueueNew.push(child));
   }
-  // else if (unmatchedChildren === false) {
-  //   nodeOld.props.children.forEach(child => nodeQueueOld.push(child));
-  //   nodeNew.props.children.forEach(child => nodeQueueNew.push(child));
-  // }
 
   return
 };

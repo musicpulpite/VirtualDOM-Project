@@ -1,4 +1,4 @@
-div {
+.todo-box {
   display: block;
   width: 300px;
   height: 250px;
@@ -8,7 +8,7 @@ div {
   padding-left: 10px;
 }
 
-div:hover {
+.todo-box:hover {
   cursor: pointer;
 }
 
@@ -39,6 +39,23 @@ aside {
   height: 500px;
 
   overflow-y: scroll;
+
+  margin-bottom: 10px;
+}
+
+#info {
+  position: absolute;
+  top: 10px;
+  left: 350px;
+
+  width: calc(100% - 100px - 300px - 300px);
+  height: auto;
+
+  font-size: 20px;
+}
+
+#info header {
+  font-weight: 600;
 
   margin-bottom: 10px;
 }

@@ -21,8 +21,41 @@
     </script>
   </head>
   <body>
+    <div id="info">
+      <header>
+        This demo website provides a simple visualization of how React.js implements
+        the virtual DOM (Document Object Model).
+      </br>
+        The boxes on the left-hand side
+        are different variations of a simple todo list. Clicking on any two will
+        show their corresponding vDOM representations in the right-hand boxes.
+        After clicking <i>Diff vDOMs</i> the differences between the two will be highlighted
+        to show how elements have been added, removed or modified.
+      </br>
+        Click <i>reset</i> to try again.
+      </header>
+      <section>
+        All of these vDOM comparisons are being made in the moment by a simplified
+        recreation of the virtual DOM diffing algorithm.
+      </br>
+        <a href="https://github.com/musicpulpite/VirtualDOM-Project">See Source Code Here</a>
+      </br>
+        A virtual DOM Node is a POJO (Plain Old Javascript Object) containing a few
+        pieces of key information:
+        <ol>
+          <li>Type: The type of HTML element being represented</li>
+          <li>Props: HTML attributes or React data being passed into element</li>
+          <li>Children: An array of vDOM nodes nested in the element</li>
+          <li>Key: Used to distinguish vDOM nodes in lists (not used by HTML)</li>
+          <li>Ref: A pointer to the corresponding HTML DOM Node</li>
+          <li>
+            $$typeof: (Not used in my version) React.js uses this to protect against
+            malicious user input
+          </li>
+        </ol>
+      </section>
+    </div>
 
-    <!-- old -->
     <aside id="oldvDOM"></aside>
 
     <button id="diff">Diff vDOM's</button>
@@ -30,7 +63,8 @@
 
     <aside id="newvDOM"></aside>
 
-    <div id="old">
+    <!-- old -->
+    <div id="old" class="todo-box">
       <h3 style="color:pink;">Original</h3>
 
       <main class="root">
@@ -45,7 +79,7 @@
     </div>
 
     <!-- new_content -->
-    <div id="modified_content">
+    <div id="modified_content" class="todo-box">
       <h3 style="color:blue;">Modified Content</h3>
 
       <main class="root">
@@ -60,7 +94,7 @@
     </div>
 
     <!-- new_insertion -->
-    <div id="insertion">
+    <div id="insertion" class="todo-box">
       <h3 style="color:orange;">Inserted Elements</h3>
 
       <main class="root">
@@ -76,7 +110,7 @@
     </div>
 
     <!-- new_deletion -->
-    <div id="deletion">
+    <div id="deletion" class="todo-box">
       <h3 style="color:purple;">Deleted Elements</h3>
 
       <main class="root">
@@ -91,7 +125,7 @@
     </div>
 
     <!-- new_mixed -->
-    <div id="mixed">
+    <div id="mixed" class="todo-box">
       <h3 style="color:brown;">Combination of Changes</h3>
 
       <main class="root">
