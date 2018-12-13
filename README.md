@@ -114,25 +114,27 @@ The second file - *vdom_differ* - contains the method for comparing two virtual 
 The diffing algorithm recalls the structure of a BFS(breadth-first-search) in that it scans the Node tree layer by layer and stops when it finds a dirty node (there is no need to search further along that branch because every child of the dirty node will be re-rendered in the actual DOM). However, unlike a traditional BFS, this implementation exhausts the nodeQueue in order to find all dirty nodes and not just the most shallow dirty node.
 
 The algorithm compares each node of the old vDOM with its corresponding node in  
-the new vDOM and checks that their names and all attributes match.
+the new vDOM and checks that their types and all props match.
 ```javascript
-// Node Name
-if (nodeOld.name !== nodeNew.name) {
-  dirty = true;
-}
-
-// Node attributes
-for (let attr in nodeOld.attributes) {
-  if (nodeOld.attributes[attr] !== nodeNew.attributes[attr]) {
+  // Node Name
+  if (nodeOld.type !== nodeNew.type) {
     dirty = true;
-  };
-};
+  }
 
-for (let attr in nodeNew.attributes) {
-  if (nodeNew.attributes[attr] !== nodeOld.attributes[attr]) {
-    dirty = true;
+  // Node attributes
+  for (let prop in nodeOld.props) {
+    if (prop === "children") continue;
+    if (nodeOld.props[prop] !== nodeNew.props[prop]) {
+      dirty = true;
+    };
   };
-};
+
+  for (let prop in nodeNew.props) {
+    if (prop === "children") continue;
+    if (nodeNew.props[prop] !== nodeOld.props[prop]) {
+      dirty = true;
+    };
+  };
 ```
 It also checks that each child of the old node and new node match up based on their keys  
 (but not necessarily that their attributes or contents match).
