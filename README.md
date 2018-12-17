@@ -8,6 +8,9 @@ I took inspiration from the following sources but this exact implementation is e
 1. [Create your own virtual DOM to understand it(part 1)](https://aibolik.github.io/blog/create-your-own-virtual-dom-to-understand-it-part-1)  
 2. [How to write your own virtual DOM](https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060)  
 
+I also referenced the React documentation in order to learn the fundamental theory:  
+1. [Reconciliation | React](https://shripadk.github.io/react/docs/reconciliation.html)
+
 ## Functionality  
 In *node_converter* there are two methods - one for converting a DOMNode element into a POJO (plain-old-javascript object) representing the structure of the original DOM and the other for doing the inverse (virtual DOM object to DOM Node).  
 
