@@ -14,6 +14,10 @@
 // valid HTML attributes that will necessarily be passed to their respective
 // DOMNodes.
 
+// ---------------------------------------------------------------------------
+
+// Convert HTML DOM to virtual representation
+
 const DOMtoVirtual = ($node, key = 1) => {
   const vnode =
     {type: "",
@@ -38,11 +42,14 @@ const DOMtoVirtual = ($node, key = 1) => {
   vnode.props.children = Array.from($node.children).map((child, key) =>
     DOMtoVirtual(child, key));
 
-  // note this!
+  // note this! This pointer gives us access to the orginal DOMN node in order
+  // to modify or delete it
   vnode.ref = $node;
 
   return vnode;
 };
+
+// Convert virtual representation back into HTML code
 
 const VirtualtoDOM = (vnode) => {
   const $node = document.createElement(vnode.type);

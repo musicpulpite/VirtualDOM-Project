@@ -22,23 +22,27 @@
   </head>
   <body>
     <header id="info">
-      <header>
-        This demo website provides a simple visualization of how React.js implements
-        the virtual DOM (Document Object Model).
+      <h4>Virtual DOM Diffing Algorithm Demonstration Project</h4>
+      <ul>
+        <li>
+          This demo website provides a simple visualization of how React.js implements
+          the virtual DOM (Document Object Model).
+        </li>
+        <li>
+          The boxes on the left-hand side are different variations of a simple todo list. Clicking on any two will
+          show their corresponding vDOM representations in the right-hand boxes.
+          After clicking <i>Diff vDOMs</i> the differences between the two will be highlighted
+          to show how elements have been added, removed or modified.
+        </li>
+        <li>
+          Click <i>Reset</i> to try again.
+        </li>
+      </ul>
       </br>
-        The boxes on the left-hand side
-        are different variations of a simple todo list. Clicking on any two will
-        show their corresponding vDOM representations in the right-hand boxes.
-        After clicking <i>Diff vDOMs</i> the differences between the two will be highlighted
-        to show how elements have been added, removed or modified.
-      </br>
-        Click <i>reset</i> to try again.
-      </header>
       <section>
         All of these vDOM comparisons are being made in the moment by a simplified
-        recreation of the virtual DOM diffing algorithm.
+        recreation of the virtual DOM diffing algorithm (link to source code below).
       </br>
-        <a href="https://github.com/musicpulpite/VirtualDOM-Project">See Source Code Here</a>
       </br>
         A virtual DOM Node is a POJO (Plain Old Javascript Object) containing a few
         pieces of key information:
@@ -54,7 +58,7 @@
           </li>
         </ol>
       </section>
-    </header>
+    </header >
 
     <aside id="oldvDOM"></aside>
 
@@ -139,6 +143,9 @@
       </main>
     </div>
 
-
+    <footer id="links">
+      <a href="https://musicpulpite.github.io/">Visit my Personal Portfolio Website</a> ||
+      <a href="https://github.com/musicpulpite/VirtualDOM-Project">See Source Code Here</a>
+    </footer>
   </body>
 </html>
